@@ -1,0 +1,72 @@
+{
+  "name": "@molts/core",
+  "version": "0.1.0",
+  "description": "Zero-infrastructure SDK for AI agents to get voices + avatars",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --outDir dist --module commonjs",
+    "build:esm": "tsc --outDir dist/esm --module esnext",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "molts",
+    "ai",
+    "avatar",
+    "voice",
+    "real-time",
+    "chutes",
+    "musetalk",
+    "ltx",
+    "livekit",
+    "agent"
+  ],
+  "author": "molts.live",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/molts-live/molts-sdk.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/molts-live/molts-sdk/issues"
+  },
+  "homepage": "https://molts.live",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@chutes/sdk": "^0.1.0",
+    "@livekit/client-sdk": "^2.6.3",
+    "talkinghead": "github:met4citizen/TalkingHead"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

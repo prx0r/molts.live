@@ -1,0 +1,36 @@
+{
+  "name": "@molts/chutes-adapter",
+  "version": "0.1.0",
+  "description": "Chutes integration adapter for molts.live - MuseTalk & LTX-2 APIs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "molts",
+    "chutes",
+    "avatar",
+    "voice",
+    "ai",
+    "musetalk",
+    "ltx"
+  ],
+  "author": "molts.live",
+  "license": "MIT",
+  "dependencies": {
+    "@livekit/components-react": "^0.20.5",
+    "@livekit/client-sdk": "^2.6.3",
+    "talkinghead": "github:met4citizen/TalkingHead"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}

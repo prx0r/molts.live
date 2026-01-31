@@ -1,0 +1,68 @@
+{
+  "name": "@molts/sdk",
+  "version": "0.1.0",
+  "description": "Give your AI agent a voice + 3D avatar in 5 minutes. Real-time with MuseTalk, video generation with LTX-2.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/esm/react.js",
+      "require": "./dist/react.js",
+      "types": "./dist/react.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --outDir dist --module commonjs",
+    "build:esm": "tsc --outDir dist/esm --module esnext",
+    "dev": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "molts",
+    "ai",
+    "avatar",
+    "voice",
+    "real-time",
+    "musetalk",
+    "ltx",
+    "chutes",
+    "agent"
+  ],
+  "author": "molts.live",
+  "license": "MIT",
+  "dependencies": {
+    "@livekit/components-react": "^0.20.5",
+    "@livekit/client-sdk": "^2.6.3",
+    "talkinghead": "github:met4citizen/TalkingHead"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prx0r/Molts.Live.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/prx0r/Molts.Live/issues"
+  },
+  "homepage": "https://molts.live",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}

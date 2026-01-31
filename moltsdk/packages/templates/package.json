@@ -1,0 +1,83 @@
+{
+  "name": "@molts/templates",
+  "version": "0.1.0",
+  "description": "Skill templates for @molts/core - pre-built personas for AI agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./philosopher": {
+      "import": "./dist/esm/templates/philosopher.js",
+      "require": "./dist/templates/philosopher.js",
+      "types": "./dist/templates/philosopher.d.ts"
+    },
+    "./coder": {
+      "import": "./dist/esm/templates/coder.js",
+      "require": "./dist/templates/coder.js",
+      "types": "./dist/templates/coder.d.ts"
+    },
+    "./teacher": {
+      "import": "./dist/esm/templates/teacher.js",
+      "require": "./dist/templates/teacher.js",
+      "types": "./dist/templates/teacher.d.ts"
+    },
+    "./comedian": {
+      "import": "./dist/esm/templates/comedian.js",
+      "require": "./dist/templates/comedian.js",
+      "types": "./dist/templates/comedian.d.ts"
+    },
+    "./news": {
+      "import": "./dist/esm/templates/news.js",
+      "require": "./dist/templates/news.js",
+      "types": "./dist/templates/news.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --outDir dist --module commonjs",
+    "build:esm": "tsc --outDir dist/esm --module esnext",
+    "dev": "tsc --watch",
+    "test": "echo \"No tests yet\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "molts",
+    "templates",
+    "skills",
+    "ai",
+    "avatar",
+    "persona"
+  ],
+  "author": "molts.live",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/molts-live/molts-sdk.git",
+    "directory": "packages/templates"
+  },
+  "bugs": {
+    "url": "https://github.com/molts-live/molts-sdk/issues"
+  },
+  "homepage": "https://molts.live",
+  "files": [
+    "dist",
+    "src/templates/*.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@molts/core": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
