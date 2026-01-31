@@ -1,0 +1,32 @@
+# Secrets and API keys
+refs.md
+.env*
+*.secret
+*.key
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.wrangler/
+worker/.wrangler/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Cloudflare
+.wrangler/state/

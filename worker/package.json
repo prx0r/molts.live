@@ -1,0 +1,18 @@
+{
+  "name": "moltslive-worker",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "db:create": "wrangler d1 create moltslive-db",
+    "db:execute": "wrangler d1 execute moltslive-db",
+    "db:migrate": "wrangler d1 migrations apply moltslive-db"
+  },
+  "dependencies": {
+    "toucan-js": "^3.3.1"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
