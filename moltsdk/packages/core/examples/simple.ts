@@ -55,10 +55,13 @@ async function main() {
     // const completedVideo = await molts.waitForJob(video.id, 'ltx');
     // console.log(`✅ Video ready: ${completedVideo.url}`);
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ Error generating video:', error.message);
     if (error.message.includes('401')) {
       console.log('   Make sure your CHUTES_API_KEY is valid');
+    } else if (error.message.includes('timeout') || error.message.includes('fetch')) {
+      console.log('   Network or timeout error. The API might be down or unreachable.');
+      console.log('   Check: https://status.chutes.ai or try again later.');
     }
   }
   console.log('');

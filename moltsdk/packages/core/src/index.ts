@@ -12,6 +12,10 @@ export interface MoltsConfig {
   livekitToken?: string;
   /** Base URL for Chutes API (default: https://api.chutes.ai) */
   baseUrl?: string;
+  /** Base URL for MuseTalk API (default: https://chutes-musetalk.chutes.ai) */
+  musetalkBaseUrl?: string;
+  /** Base URL for LTX-2 API (default: https://chutes-ltx-2.chutes.ai) */
+  ltxBaseUrl?: string;
 }
 
 export interface SkillTemplate {
@@ -121,6 +125,8 @@ export interface VoiceRoomConfig {
 export class MoltsClient {
   private chutesApiKey: string;
   private baseUrl: string;
+  private musetalkBaseUrl: string;
+  private ltxBaseUrl: string;
   private livekitToken?: string;
   
   /** Built-in skill templates */
@@ -214,6 +220,8 @@ export class MoltsClient {
 
     this.chutesApiKey = config.chutesApiKey;
     this.baseUrl = config.baseUrl || 'https://api.chutes.ai';
+    this.musetalkBaseUrl = config.musetalkBaseUrl || 'https://chutes-musetalk.chutes.ai';
+    this.ltxBaseUrl = config.ltxBaseUrl || 'https://chutes-ltx-2.chutes.ai';
     this.livekitToken = config.livekitToken;
   }
 
@@ -239,7 +247,10 @@ export class MoltsClient {
                         (skill && typeof skill === 'object' ? skill.avatarPrompt : 'friendly AI assistant');
 
     try {
-      const response = await fetch(`${this.baseUrl}/chutes/ltx-2/generate`, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+      const response = await fetch(`${this.ltxBaseUrl}/generate`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.chutesApiKey}`,
@@ -257,8 +268,11 @@ export class MoltsClient {
           image_frame_index: 0,
           num_inference_steps: 40,
           ...request.ltxParams
-        })
+        }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const error = await response.text();
@@ -283,7 +297,10 @@ export class MoltsClient {
    */
   async avatar(request: AvatarRequest): Promise<AvatarResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/chutes/musetalk/generate`, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+      const response = await fetch(`${this.musetalkBaseUrl}/generate`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.chutesApiKey}`,
@@ -299,8 +316,11 @@ export class MoltsClient {
           left_cheek_width: 90,
           right_cheek_width: 90,
           ...request.museTalkParams
-        })
+        }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const error = await response.text();
@@ -324,14 +344,20 @@ export class MoltsClient {
    * Check job status
    */
   async getJobStatus(jobId: string, service: 'ltx' | 'musetalk' = 'ltx'): Promise<VideoResponse | AvatarResponse> {
-    const endpoint = service === 'musetalk' ? 'musetalk' : 'ltx-2';
+    const baseUrl = service === 'musetalk' ? this.musetalkBaseUrl : this.ltxBaseUrl;
     
     try {
-      const response = await fetch(`${this.baseUrl}/chutes/${endpoint}/jobs/${jobId}`, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout for status checks
+
+      const response = await fetch(`${baseUrl}/jobs/${jobId}`, {
         headers: {
           'Authorization': `Bearer ${this.chutesApiKey}`,
-        }
+        },
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error(`Failed to get job status: ${response.status}`);
@@ -423,7 +449,9 @@ export function createMoltsClient(chutesApiKey: string, livekitToken?: string): 
   return new MoltsClient({
     chutesApiKey,
     livekitToken,
-    baseUrl: 'https://api.chutes.ai'
+    baseUrl: 'https://api.chutes.ai',
+    musetalkBaseUrl: 'https://chutes-musetalk.chutes.ai',
+    ltxBaseUrl: 'https://chutes-ltx-2.chutes.ai'
   });
 }
 

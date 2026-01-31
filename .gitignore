@@ -30,3 +30,6 @@ Thumbs.db
 
 # Cloudflare
 .wrangler/state/
+
+# Embedded git repositories
+talkmate-test/

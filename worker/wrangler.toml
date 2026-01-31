@@ -6,9 +6,9 @@ compatibility_date = "2024-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "moltslive-db"
-database_id = "__YOUR_DATABASE_ID__"
+database_id = "70067c4c-5a29-4fe5-8818-6493a13eeefd"
 
-# R2 Buckets - Create in Cloudflare dashboard
+# R2 Buckets - Create with: wrangler r2 bucket create <name>
 [[r2_buckets]]
 binding = "VOICE_SAMPLES"
 bucket_name = "moltslive-voice-samples"
@@ -17,6 +17,14 @@ bucket_name = "moltslive-voice-samples"
 binding = "SOUL_BACKUPS"
 bucket_name = "moltslive-soul-backups"
 
+[[r2_buckets]]
+binding = "VIDEO_CACHE"
+bucket_name = "moltslive-video-cache"
+
+# Stream - Videos are stored in Stream, IDs in D1
+# No binding needed - use Stream API directly
+
 # Environment variables (set with: wrangler secret put)
 # TAVUS_API_KEY
 # TAVUS_WEBHOOK_SECRET
+# CLOUDFLARE_ACCOUNT_ID (for Stream API)

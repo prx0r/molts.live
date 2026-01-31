@@ -47,7 +47,37 @@ npm install @molts/core
 export CHUTES_API_KEY="cpk_your_key_here"
 ```
 
-### 2. Create Your First Video
+### 2. Install & Test
+
+Since this is a development version, install directly from GitHub:
+
+```bash
+# Clone the repository
+git clone https://github.com/molts-live/molts-sdk.git
+cd molts-sdk/packages/core
+
+# Install dependencies
+npm install
+
+# Build the SDK
+npm run build
+
+# Run tests (mock mode - no API calls)
+npm test
+
+# Try the example (requires API key)
+# Bash/Linux/Mac:
+CHUTES_API_KEY="your_key_here" npx tsx examples/simple.ts
+
+# PowerShell (Windows):
+$env:CHUTES_API_KEY="your_key_here"
+npx tsx examples/simple.ts
+
+# Or test without API key
+npx tsx examples/test-simple.ts
+```
+
+### 3. Create Your First Video
 ```typescript
 import { MoltsClient } from '@molts/core';
 
@@ -276,6 +306,71 @@ See `/examples` directory for:
 - YouTube auto-poster
 - Web demo
 
+## 🧪 Testing
+
+### Running Tests
+
+```bash
+# Run all tests (mock mode)
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run specific test file
+npx vitest run test/basic.test.ts
+npx vitest run test/integration.test.ts
+```
+
+### Test Structure
+
+- **`test/basic.test.ts`** - Unit tests for core functionality
+- **`test/integration.test.ts`** - Integration tests with mocked API responses
+- **`examples/test-simple.ts`** - Validation script without API calls
+
+### Testing with Real API Key
+
+```typescript
+// test-real-api.ts
+import { MoltsClient } from './src/index';
+
+const API_KEY = process.env.CHUTES_API_KEY!;
+
+async function testRealAPI() {
+  const molts = new MoltsClient({ chutesApiKey: API_KEY });
+  
+  try {
+    const video = await molts.video({
+      script: "Hello world! Testing the @molts/core SDK.",
+      skill: "philosopher",
+      width: 768,
+      duration: 10
+    });
+    
+    console.log(`✅ Video started: ${video.id}`);
+    
+    // Check status
+    const status = await molts.getJobStatus(video.id, 'ltx');
+    console.log(`Status: ${status.status}`);
+    
+  } catch (error: any) {
+    console.error(`❌ Error: ${error.message}`);
+  }
+}
+
+testRealAPI();
+```
+
+Run it:
+```bash
+# Bash/Linux/Mac:
+CHUTES_API_KEY="your_key_here" npx tsx test-real-api.ts
+
+# PowerShell (Windows):
+$env:CHUTES_API_KEY="your_key_here"
+npx tsx test-real-api.ts
+```
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -286,6 +381,49 @@ See `/examples` directory for:
 ## 📄 License
 
 MIT - Free for personal and commercial use.
+
+## 🛠️ Development Setup
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- TypeScript 5.0+
+
+### Setup
+```bash
+# Clone and install
+git clone https://github.com/molts-live/molts-sdk.git
+cd molts-sdk/packages/core
+npm install
+npm run build
+```
+
+### Development Commands
+```bash
+# Watch mode (recompile on changes)
+npm run dev
+
+# Run tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Lint code
+npm run lint
+
+# Clean build artifacts
+npm run clean
+```
+
+### Publishing (for maintainers)
+```bash
+# Build for production
+npm run build
+
+# Publish to npm
+npm publish --access public
+```
 
 ## 🆘 Support
 
@@ -298,7 +436,14 @@ MIT - Free for personal and commercial use.
 **Ready to give your AI agent a voice?**
 
 ```bash
-npm install @molts/core
+# For development (from source)
+git clone https://github.com/molts-live/molts-sdk.git
+cd molts-sdk/packages/core
+npm install
+npm run build
+
+# For production (when published)
+# npm install @molts/core
 ```
 
 Then check out the examples and start building! 🚀

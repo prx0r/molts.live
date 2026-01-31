@@ -58,7 +58,7 @@ describe('MoltsClient Integration Tests', () => {
     // Verify API call
     expect(mockFetch).toHaveBeenCalledTimes(1);
     const [url, options] = mockFetch.mock.calls[0];
-    expect(url).toBe('https://api.chutes.ai/chutes/ltx-2/generate');
+    expect(url).toBe('https://chutes-ltx-2.chutes.ai/generate');
     expect(options.method).toBe('POST');
     expect(options.headers).toEqual({
       'Authorization': 'Bearer test_chutes_key_123',
@@ -120,7 +120,7 @@ describe('MoltsClient Integration Tests', () => {
     expect(result.status).toBe('processing');
 
     const [url, options] = mockFetch.mock.calls[0];
-    expect(url).toBe('https://api.chutes.ai/chutes/musetalk/generate');
+    expect(url).toBe('https://chutes-musetalk.chutes.ai/generate');
     expect(options.method).toBe('POST');
     
     const body = JSON.parse(options.body);

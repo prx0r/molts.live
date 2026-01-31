@@ -70,7 +70,7 @@ describe('MoltsClient', () => {
     expect(result.status).toBe('processing');
     
     expect(mockFetch).toHaveBeenCalledWith(
-      expect.stringContaining('/chutes/ltx-2/generate'),
+      expect.stringContaining('https://chutes-ltx-2.chutes.ai/generate'),
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
@@ -98,7 +98,7 @@ describe('MoltsClient', () => {
     expect(result.status).toBe('processing');
     
     expect(mockFetch).toHaveBeenCalledWith(
-      expect.stringContaining('/chutes/musetalk/generate'),
+      expect.stringContaining('https://chutes-musetalk.chutes.ai/generate'),
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
@@ -126,7 +126,7 @@ describe('MoltsClient', () => {
     expect(result.status).toBe('completed');
     
     expect(mockFetch).toHaveBeenCalledWith(
-      expect.stringContaining('/chutes/ltx-2/jobs/test_job_123'),
+      expect.stringContaining('https://chutes-ltx-2.chutes.ai/jobs/test_job_123'),
       expect.objectContaining({
         headers: expect.objectContaining({
           'Authorization': `Bearer ${TEST_CONFIG.chutesApiKey}`
